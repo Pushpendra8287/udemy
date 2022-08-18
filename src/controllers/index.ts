@@ -1,0 +1,15 @@
+export * from './ping.controller';
+// export * from './categorycontroller';
+export * from './category.controller';
+export * from './ecom.controller';
+export * from './region-city.controller';
+export * from './city.controller';
+export * from './region.controller';
+export * from './product.controller';
+export * from './student.controller';
+export * from './course-student.controller';
+export * from './course.controller';
+export * from './department.controller';
+export * from './student-department.controller';
+export * from './address.controller';
+export * from './student-address.controller';
