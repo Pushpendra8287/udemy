@@ -6,7 +6,7 @@ export async function migrate(args: string[]) {
 
   const app = new EdprimeApplication();
   await app.boot();
-  await app.migrateSchema({existingSchema, model:['Student', 'Course', 'Department', 'Address']});
+  await app.migrateSchema({existingSchema, model:['Student', 'Course', 'Department', 'Address', 'User']});
 
   // Connectors usually keep a pool of opened connections,
   // this keeps the process running even after all work is done.
