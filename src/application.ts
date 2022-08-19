@@ -9,6 +9,7 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
+import {BcryptHasher} from './services/hash.password.bcrypt';
 
 export {ApplicationConfig};
 
@@ -17,7 +18,8 @@ export class EdprimeApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
-
+    //set up bindings
+    this.setupBinding();
     // Set up the custom sequence
     this.sequence(MySequence);
 
@@ -40,5 +42,10 @@ export class EdprimeApplication extends BootMixin(
         nested: true,
       },
     };
+  }
+  setupBinding() :void{
+    this.bind('service.hasher').toClass(BcryptHasher);
+    this.bind('rounds').to(10)
+    // throw new Error('Method not implemented.');
   }
 }
