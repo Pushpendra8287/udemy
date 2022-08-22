@@ -1,14 +1,14 @@
 export const CredentialsSchema = {
-  type: 'object' as const,
-  required: ['email', 'password'] as const,
+  type: 'object',
+  required: ['email', 'password'],
   properties: {
     email: {
-      type: 'string' as const,
-      format: 'email' as const,
+      type: 'string',
+      format: 'email',
     },
     password: {
-      type: 'string' as const,
-      minLength: 8 as const,
+      type: 'string',
+      minLength: 8,
     },
   },
 };
@@ -17,8 +17,27 @@ export const CredentialsRequestBody = {
   required: true,
   content: {
     'application/json': {schema: CredentialsSchema},
-  }
-}
-// function CredentialsRequestBody(CredentialsRequestBody: any) {
-//   throw new Error('Function not implemented.');
+  },
+};
+// export const CredentialsSchema = {
+//   type: 'object' as const,
+//   required: ['email', 'password'] as const,
+//   properties: {
+//     email: {
+//       type: 'string' as const,
+//       format: 'email' as const,
+//     },
+//     password: {
+//       type: 'string' as const,
+//       minLength: 8 as const,
+//     },
+//   },
+// };
+// export const CredentialsRequestBody = {
+//   description: 'The input of login function',
+//   required: true,
+//   content: {
+//     'application/json': {schema: CredentialsSchema},
+//   }
 // }
+

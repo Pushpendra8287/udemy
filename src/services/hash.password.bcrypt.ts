@@ -1,13 +1,19 @@
 import {inject} from '@loopback/core';
-import {genSalt, hash} from 'bcryptjs'
+import {genSalt, hash, compare} from 'bcryptjs'
+import {PasswordHasherBindings} from '../keys';
 
-interface PasswordHasher<T = string> {
+export interface PasswordHasher<T = string> {
   hashPassword(password : T) : Promise<T>;
+  comparePassword(providedPass: T, storedPass: T):Promise<boolean>
 }
 
 
 export class BcryptHasher implements PasswordHasher<string>{
-  @inject('rounds')
+  async comparePassword(providedPass: string, storedPass: string): Promise<boolean> {
+    const passwordMathed = await compare(providedPass,storedPass);
+    return passwordMathed
+  }
+  @inject(PasswordHasherBindings.ROUNDS)
   public readonly round: number
   // round: number = 10;
 

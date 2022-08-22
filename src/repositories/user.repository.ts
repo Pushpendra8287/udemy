@@ -4,7 +4,7 @@ import {MysqlDataSource} from '../datasources';
 import {User, UserRelations} from '../models';
 
 export type Credentials = {
-  email : string;
+  email: string;
   password: string;
 }
 export class UserRepository extends DefaultCrudRepository<

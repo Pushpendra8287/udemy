@@ -7,7 +7,7 @@ export class User extends Entity {
     id: true,
     generated: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
@@ -27,7 +27,7 @@ export class User extends Entity {
     index: {
       unique: true
      },
-  
+
   })
   firstName: string;
 
