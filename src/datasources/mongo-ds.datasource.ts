@@ -5,15 +5,15 @@ import { EdprimeApplication } from '../application';
 const config = {
   name: 'mongoDs',
   connector: 'mongodb',
-  url: '',
+  url: 'mongodb+srv://rohit2424:AdMyJHKIfWtpT31H@cluster0.ki3d0.mongodb.net/edprime',
   host: 'localhost',
-  port: 27017,
+  port: "",
   user: '',
   password: '',
   database: 'edPrime',
   useNewUrlParser: true
 };
-// if 
+// if
 // name unique
 // email unique
 // mobile
