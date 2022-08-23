@@ -13,7 +13,8 @@ import {BcryptHasher} from './services/hash.password.bcrypt';
 import {MyUserService} from './services/user-service';
 import {JWTService} from './services/jwt-service';
 import {PasswordHasherBindings, TokenServiceBindings, TokenServiceConstants, UserServiceBindings} from './keys';
-
+import {AuthenticationComponent, registerAuthenticationStrategy} from '@loopback/authentication';
+import {JWTStrategy} from './authentication-stategiese/jwt-strategy'
 export {ApplicationConfig};
 
 export class EdprimeApplication extends BootMixin(
@@ -23,6 +24,10 @@ export class EdprimeApplication extends BootMixin(
     super(options);
     //set up bindings
     this.setupBinding();
+
+    this.component(AuthenticationComponent);
+    registerAuthenticationStrategy(this, JWTStrategy)
+
     // Set up the custom sequence
     this.sequence(MySequence);
 
@@ -53,9 +58,9 @@ export class EdprimeApplication extends BootMixin(
     this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(JWTService);
     this.bind(TokenServiceBindings.TOKEN_SECRET).to(
       TokenServiceConstants.TOKEN_SECRET_VALUE
-      );
+    );
     this.bind(TokenServiceBindings.TOKEN_EXPIRES_IN).to(
       TokenServiceConstants.TOKEN_EXPIRES_IN_VALUE
-      );
+    );
   }
 }

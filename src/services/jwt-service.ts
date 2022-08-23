@@ -7,7 +7,8 @@ import {TokenServiceBindings} from '../keys';
 
 
 const jwt = require('jsonwebtoken');
-const signAsync = promisify(jwt.sign)
+const signAsync = promisify(jwt.sign);
+const verifyAsync = promisify(jwt.verify)
 
 
 
@@ -34,6 +35,31 @@ export class JWTService {
     return token
   }
   async verifyToken(token: string): Promise<UserProfile> {
-    return Promise.resolve({name: "pushpendra", id: 1})
+    // return Promise.resolve({name: "pushpendra", id: 1})
+    if(!token){
+      throw new HttpErrors.Unauthorized(
+        `Error verying token : 'token' is null`,
+      );
+    }
+    let userProfile : UserProfile;
+    try{
+      // decode user profile from token
+      const decryptedToken = await verifyAsync(token, this.jwtSecret);
+      // donnt copy over token field 'iat' and 'exp' nor 'email' o user profile
+      userProfile = Object.assign(
+        {id: "", name: ""},
+        {id: decryptedToken.id, name: decryptedToken.name},
+      );
+
+    }
+    catch(error){
+      throw new HttpErrors.Unauthorized(
+        `Error veryfing token : ${error.message}`,
+      );
+
+    }
+    return userProfile;
   }
+
+
 }

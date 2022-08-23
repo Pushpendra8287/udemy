@@ -8,3 +8,4 @@ export * from './course.model';
 export * from './department.model';
 export * from './address.model';
 export * from './user.model';
+export * from './job.model';
