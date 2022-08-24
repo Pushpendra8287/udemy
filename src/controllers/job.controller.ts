@@ -1,4 +1,6 @@
 import {authenticate} from '@loopback/authentication';
+import {authorize} from '@loopback/authorization';
+
 import {
   Count,
   CountSchema,
@@ -27,24 +29,18 @@ export class JobController {
     @repository(JobRepository)
     public jobRepository : JobRepository,
   ) {}
-// admin should be authenticated
-// only admin can access this routes
-// please run x and y function
-
-
-// for loopback4 project
-
-// https://loopback.io/blog/building-an-online-game-with-loopback-4-pt4
-// https://loopback.io/blog/building-an-online-game-with-loopback-4-pt4
-
-
 
   @post('/jobs')
   @response(200, {
     description: 'Job model instance',
     content: {'application/json': {schema: getModelSchemaRef(Job)}},
   })
-  @authenticate('jwt', {required: [PermissionKeys.CreateJob]})
+// @authenticate('jwt',)
+// @authorize({ allowedRoles: [<PermissionN>,], voters: [basicAuthorization] })
+@authenticate('jwt')
+  // @authenticate('jwt',{required:[PermissionKeys.CreateJob]})
+  @authorize({ voters: [PermissionKeys.CreateJob]})
+
   async create(
     @requestBody({
       content: {
@@ -89,8 +85,7 @@ export class JobController {
   ): Promise<Job[]> {
     return this.jobRepository.find(filter);
   }
-// admin should be authenticated
-// only admin can access this routes
+
   @patch('/jobs')
   @response(200, {
     description: 'Job PATCH success count',
@@ -125,8 +120,7 @@ export class JobController {
   ): Promise<Job> {
     return this.jobRepository.findById(id, filter);
   }
-// admin should be authenticated
-// only admin can access this routes
+
   @patch('/jobs/{id}')
   @response(204, {
     description: 'Job PATCH success',
@@ -144,8 +138,7 @@ export class JobController {
   ): Promise<void> {
     await this.jobRepository.updateById(id, job);
   }
-// admin should be authenticated
-// only admin can access this routes
+
   @put('/jobs/{id}')
   @response(204, {
     description: 'Job PUT success',
@@ -156,8 +149,7 @@ export class JobController {
   ): Promise<void> {
     await this.jobRepository.replaceById(id, job);
   }
-// admin should be authenticated
-// only admin can access this routes
+
   @del('/jobs/{id}')
   @response(204, {
     description: 'Job DELETE success',

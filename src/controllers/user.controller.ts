@@ -91,13 +91,14 @@ export class UserController {
 
 
   async login(
-    @requestBody(CredentialsRequestBody) credentials: Credentials, // for error below link
+    @requestBody() credentials: Credentials, // for error below link
     // https://github.com/loopbackio/loopback-next/discussions/7195
   ): Promise<{token: string}> {
     // make sure user exist, password should be valid
     const user = await this.userService.verifyCredentials(credentials);
     // console.log(user)
     const userProfile = await this.userService.convertToUserProfile(user);
+    // userProfile.permissions = user.permissions
     // console.log(userProfile)
     // generate a json web token
     const token = await this.jwtService.generateToken(userProfile)
