@@ -1,12 +1,15 @@
 import {UserService, } from '@loopback/authentication'
 import {Credentials, UserRepository} from '../repositories'
 import {User} from '../models'
-import {UserProfile} from '@loopback/security'
+import {UserProfile,securityId} from '@loopback/security'
 import {repository} from '@loopback/repository'
 import {HttpErrors} from '@loopback/rest'
 import {inject} from '@loopback/core'
 import {BcryptHasher} from './hash.password.bcrypt'
 import {PasswordHasherBindings} from '../keys'
+import {MyUserProfile} from '../types'
+import { pick } from 'lodash'
+import {toJSON} from '@loopback/testlab'
 
 
 
@@ -40,16 +43,29 @@ export class MyUserService implements UserService<User, Credentials>{
     return foundUser;
   }
 
-  convertToUserProfile(user: User): UserProfile {
+  convertToUserProfile(user: User): MyUserProfile {
     let userName = '';
     if (user.firstName) {
       userName = user.firstName;
     }
     if (user.lastName) {
-      userName = user.firstName ? `${user.firstName} ${user.lastName}` : user.lastName;
+      userName = user.firstName
+      ? `${user.firstName} ${user.lastName}`
+      : user.lastName;
     }
-    return {id: `${user.id}`, name: userName};
+    let currentUser: MyUserProfile = pick(toJSON(user),[
+      'id',
+      'permissions',
+    ]) as MyUserProfile;
+
+    // console.log('current-user', currentUser);
+
+    currentUser.name = userName
+    return currentUser;
+    // currentUser = {id: user.id, name: user.name, roles: user.roles};
+    // return {id: `${user.id}`, name: userName, permissions: user.permissions};
 
   }
 
 }
+

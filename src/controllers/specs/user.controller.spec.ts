@@ -1,4 +1,7 @@
-export const CredentialsSchema = {
+
+// import {SchemaObject} from '@loopback/openapi-v3';
+import {RequestBodyObject, SchemaObject} from '@loopback/rest';
+export const CredentialsSchema: SchemaObject = {
   type: 'object',
   required: ['email', 'password'],
   properties: {
@@ -12,7 +15,7 @@ export const CredentialsSchema = {
     },
   },
 };
-export const CredentialsRequestBody = {
+export const CredentialsRequestBody: RequestBodyObject= {
   description: 'The input of login function',
   required: true,
   content: {
