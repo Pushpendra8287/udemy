@@ -91,10 +91,11 @@ export class EcomController {
       },
     },
   })
-  async find(
+  async find(@param.query.string('name')name:string,
     // @param.path.number('mobile') mobile: number,
     @param.filter(Ecom) filter?: Filter<Ecom>,
   ): Promise<Ecom[]> {
+
     // return this.ecomRepository.find({ where: ({mobile:mobile} )});
     // await accountRepository.find({where: {name: 'John'}, limit: 3});
     // return await this.ecomRepository.find({where: {or: [Ecom.]}});
@@ -106,8 +107,9 @@ export class EcomController {
 //     }
 //  };
 
-//  const result = await this.ecomRepository.findOne(filter);
-return this.ecomRepository.find({ where: { name: EcomController.name } },filter)
+let data =  await this.ecomRepository.find({where: {or: [{name: Ecom.name, color: Ecom.color}]}})
+// return this.ecomRepository.find(name,filter)
+return data
 
     // return result
     // return this.ecomRepository.find(filter);

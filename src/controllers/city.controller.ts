@@ -70,10 +70,12 @@ export class CityController {
       },
     },
   })
-  async find(
-    @param.filter(City) filter?: Filter<City>,
-  ): Promise<City[]> {
-    return this.cityRepository.find(filter);
+  async find(@param.filter(City) filter?: Filter<City>,): Promise<City[]> {
+    // const data = await this.cityRepository.find({where:{name:CityController.name}})
+    // console.log(data)
+    // var pattern = new RegExp('.*'+filter+'.*', "i"); /* case-insensitive RegExp search */
+// Post.find({ where: {title: { like: pattern} } },
+    return await this.cityRepository.find({where: {name: {like: '%St%'}}});
   }
 
   @patch('/cities')
@@ -144,7 +146,7 @@ export class CityController {
   @response(204, {
     description: 'City DELETE success',
   })
-  async deleteById(@param.path.number('id') id: string): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.cityRepository.deleteById(id);
   }
 }
